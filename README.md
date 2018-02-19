@@ -1,4 +1,4 @@
-**** pidctrl-rs ****
+###pidctrl-rs
 
 This is a (currently small) PID controller library written in Rust. It
 is primarily for educational use, and is tied to a small Python script
