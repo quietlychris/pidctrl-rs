@@ -5,7 +5,7 @@ is primarily for educational use, and is tied to a small Python script
 using bash to quickly generate all results.
 
 The workflow would follow as such:
-  1. Dependencies include Python's *numpy*, *scipy*, and Rust's *cargo*
+  1. Make sure all the dependencies exist, including Python's *numpy*, *scipy*, as well as Rust's *cargo*
   2. Create a new Rust project
   3. Copy both `main.rs` and `pid_lib.rs` into the `/project_name/src/`
   4. Change the gains and time period in `main.rs` to those desired
