@@ -27,13 +27,12 @@ fn main(){
 
     // Creates a new controller
     //let mut controller = PIDController::new(1.5,1.0,0.0,PIDSet::default());
-    let mut smd = SMD::new(1.0,0.1,1.0);
+    let smd = SMD::new(1.0,0.3,1.0);
 
     // Sets 'time' to zero and runs loop loop for designatd time
     let mut time: f32 = 0.0;
-    while time < 1.0
+    while time < 50.0
     {
-        position = controller.control(position,setpoint);
         state.update_w_smd(desired,smd);
         // The following two lines are for command-line output
         //println!("  time = {:.2} s   | {:.2}  {:.2}  {:.2}     "
