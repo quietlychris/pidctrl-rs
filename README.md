@@ -1,8 +1,11 @@
 ## pidctrl-rs
 
-This is a (currently small) PID controller library written in Rust. It
+This is a (currently small) control systems library written in Rust. It
 is primarily for educational use, and is tied to a small Python script
 using bash to quickly generate all results.
+
+The current implementation includes basic visualizations for both PID control
+logic and spring-mass-damper systems.
 
 To run, please do the following:
   1. Make sure all the dependencies exist, including Python's *numpy*, *scipy*, as well as Rust's *cargo*

@@ -11,20 +11,54 @@ fn main(){
     let f = File::create(filename).expect("Unable to create file");
     let mut f = BufWriter::new(f);
 
+
     // Defines a control value's position, and the desired setpoint
-    let mut position = Position {x: 0.0 };
-    let mut setpoint = Position {x: 1.0 };
+    //let mut position = Position {x: 0.0 };
+    //let mut setpoint = Position {x: 1.0 };
+    let mut state = State { position: Position {x: 0.0} ,
+                            velocity: Velocity {x: 0.0} ,
+                            acceleration: Acceleration {x: 0.0}
+                          };
+
+    let desired =  State { position: Position {x: 1.0},
+                           velocity: Velocity {x: 0.0},
+                           acceleration: Acceleration {x: 0.0}
+                         };
 
     // Creates a new controller
-    let mut controller = PIDController::new(1.5,1.0,0.0,PIDSet::new());
+    //let mut controller = PIDController::new(1.5,1.0,0.0,PIDSet::default());
+    let mut smd = SMD::new(1.0,0.1,1.0);
 
-
-    // Sets 'time' to zero and runs control loop for designatd time
+    // Sets 'time' to zero and runs loop loop for designatd time
     let mut time: f32 = 0.0;
-    while time < 1.0
+    while time < 50.0
+    {
+        //position = controller.control(position,setpoint);
+        state.update_w_smd(desired,smd);
+        println!("  time = {:.2} s   | {:.2}  {:.2}  {:.2}     "
+            ,time,state.position.x,state.velocity.x,state.acceleration.x);
+        // Uses time-step value pulled from library
+        time = time + pid_lib::DT;
+
+        // writing data the the csv file
+        f.write_all(time.to_string().as_bytes())
+            .expect("Couldn't write time to file");
+        f.write_all(b",")
+            .expect("Comma was not written to file");
+        f.write_all(state.position.x.to_string().as_bytes())
+            .expect("Couldn't write position to file");
+        f.write_all(b"\n")
+            .expect("Couldn't append endline to file");
+
+    }
+    // For plotting PID controller
+    /*
+    time = 0.0;
+    while time < 50.0
     {
         position = controller.control(position,setpoint);
-        println!("  time = {:.2} s   | {:.5}      ",time,position.x);
+        println!("  time = {:.2} s   | {:.5}   "
+            ,time,position.x);
         // Uses time-step value pulled from library
         time = time + pid_lib::DT;
 
@@ -37,6 +71,8 @@ fn main(){
             .expect("Couldn't write position to file");
         f.write_all(b"\n")
             .expect("Couldn't append endline to file");
+
     }
+    */
 
 }
