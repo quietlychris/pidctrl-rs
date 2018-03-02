@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 /* This is a small control systems library written in Rust. It has not been
 thoroughly tested, so is probably not ready for use on real hardware at the
 moment.
@@ -122,8 +123,6 @@ pub fn find_error(a: f32, b: f32) -> f32 {
         // This is pretty important for angular PID controllers, since
         // transformations from 3 to 2 degrees shouldn't be seen as moving
         // all the way around the unit circle
-        //
-        // TO_DO: Introduce case loops for when a | b equal 0
 
         if a >= 0f32 && b >= 0f32 // CASE 1
         {
@@ -150,7 +149,7 @@ pub fn find_error(a: f32, b: f32) -> f32 {
             else { 0f32 }
         }
         else {
-            println!("hmm, either we're at t=0, or an unexpected condition has appeared (a | b == 0)");
+            println!("hmm, an unexpected condition has appeared (a | b == 0)");
             0f32
         }
 }
@@ -158,10 +157,9 @@ pub fn find_error(a: f32, b: f32) -> f32 {
 impl State {
 
     pub fn update_w_smd(&mut self, desired: State, smd: SMD) {
-        //let error_v = find_error(desired.velocity.x,self.velocity.x);
-        let error = find_error(desired.position.x,self.position.x);
-        println!("desired.position.x = {}, error = {}",desired.position.x,error);
 
+        let error = find_error(desired.position.x,self.position.x);
+        //println!("desired.position.x = {}, error = {}",desired.position.x,error);
         self.acceleration.x = (-smd.c/smd.m)*self.velocity.x + (smd.k/smd.m)*error;
         self.velocity.x = self.velocity.x + self.acceleration.x*DT;
         self.position.x = self.position.x + self.velocity.x*DT;

@@ -31,12 +31,13 @@ fn main(){
 
     // Sets 'time' to zero and runs loop loop for designatd time
     let mut time: f32 = 0.0;
-    while time < 50.0
+    while time < 1.0
     {
-        //position = controller.control(position,setpoint);
+        position = controller.control(position,setpoint);
         state.update_w_smd(desired,smd);
-        println!("  time = {:.2} s   | {:.2}  {:.2}  {:.2}     "
-            ,time,state.position.x,state.velocity.x,state.acceleration.x);
+        // The following two lines are for command-line output
+        //println!("  time = {:.2} s   | {:.2}  {:.2}  {:.2}     "
+        //    ,time,state.position.x,state.velocity.x,state.acceleration.x);
         // Uses time-step value pulled from library
         time = time + pid_lib::DT;
 
@@ -57,8 +58,9 @@ fn main(){
     while time < 50.0
     {
         position = controller.control(position,setpoint);
-        println!("  time = {:.2} s   | {:.5}   "
-            ,time,position.x);
+        // The following two lines are for command-line output
+        //println!("  time = {:.2} s   | {:.5}   "
+        //    ,time,position.x);
         // Uses time-step value pulled from library
         time = time + pid_lib::DT;
 
